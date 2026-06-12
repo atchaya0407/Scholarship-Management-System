@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScholarVault – Scholarship Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NOTIFICATION BANNER -->
+<div id="notificationBanner" class="notif-banner hidden">
+  <span class="notif-icon">🔔</span>
+  <span id="notifText">Deadline Alert!</span>
+  <button onclick="closeNotif()">✕</button>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🎓</div>
+    <div class="logo-text">Scholar<span>Vault</span></div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" onclick="showPage('dashboard',this)">
+      <span class="nav-icon">⚡</span><span>Dashboard</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('apply',this)">
+      <span class="nav-icon">📋</span><span>Apply Now</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('eligibility',this)">
+      <span class="nav-icon">🤖</span><span>AI Eligibility</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('scholarships',this)">
+      <span class="nav-icon">💎</span><span>Scholarships</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('tracking',this)">
+      <span class="nav-icon">📡</span><span>Real-Time Track</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('blockchain',this)">
+      <span class="nav-icon">🔗</span><span>Blockchain Verify</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('alerts',this)">
+      <span class="nav-icon">📣</span><span>Multi Alerts</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('admin',this)">
+      <span class="nav-icon">🛡️</span><span>Admin Panel</span>
+    </a>
+  </nav>
+  <div class="sidebar-user">
+    <div class="user-avatar">AA</div>
+    <div class="user-info">
+      <div class="user-name">Atchaya</div>
+      <div class="user-role">Student</div>
+    </div>
+    <div class="user-status"></div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+      <div class="breadcrumb" id="breadcrumb">Dashboard</div>
+    </div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" placeholder="Search scholarships…">
+      </div>
+      <button class="notif-btn" onclick="triggerDeadlineAlert()">
+        🔔 <span class="badge">3</span>
+      </button>
+      <div class="theme-switch" onclick="toggleTheme()">🌙</div>
+    </div>
+  </header>
+
+  <!-- ─────────── PAGE: DASHBOARD ─────────── -->
+  <section class="page active" id="page-dashboard">
+    <div class="page-header">
+      <h1>Welcome back, Atchaya 👋</h1>
+      <p>Track, apply, and win scholarships — all in one place.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card" style="--c:#ff6b6b">
+        <div class="stat-icon">📚</div>
+        <div class="stat-value counter" data-target="248">0</div>
+        <div class="stat-label">Available Scholarships</div>
+        <div class="stat-bar"><div style="width:82%"></div></div>
+      </div>
+      <div class="stat-card" style="--c:#feca57">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value counter" data-target="12">0</div>
+        <div class="stat-label">Applications Submitted</div>
+        <div class="stat-bar"><div style="width:48%"></div></div>
+      </div>
+      <div class="stat-card" style="--c:#48dbfb">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-value counter" data-target="3">0</div>
+        <div class="stat-label">Awards Received</div>
+        <div class="stat-bar"><div style="width:25%"></div></div>
+      </div>
+      <div class="stat-card" style="--c:#ff9ff3">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">$<span class="counter" data-target="15000">0</span></div>
+        <div class="stat-label">Total Funding Won</div>
+        <div class="stat-bar"><div style="width:60%"></div></div>
+      </div>
+    </div>
+
+    <!-- DEADLINE REMINDERS -->
+    <div class="section-title">⏰ Upcoming Deadlines</div>
+    <div class="deadline-cards">
+      <div class="deadline-card urgent">
+        <div class="dl-left">
+          <div class="dl-name">Gates Millennium Scholarship</div>
+          <div class="dl-org">Bill & Melinda Gates Foundation</div>
+        </div>
+        <div class="dl-right">
+          <div class="dl-days">2 Days Left</div>
+          <div class="dl-amount">$10,000</div>
+          <button class="btn-sm" onclick="triggerDeadlineAlert()">🔔 Remind</button>
+        </div>
+        <div class="urgency-bar" style="width:95%"></div>
+      </div>
+      <div class="deadline-card warning">
+        <div class="dl-left">
+          <div class="dl-name">STEM Excellence Award</div>
+          <div class="dl-org">National Science Foundation</div>
+        </div>
+        <div class="dl-right">
+          <div class="dl-days">7 Days Left</div>
+          <div class="dl-amount">$5,000</div>
+          <button class="btn-sm" onclick="triggerDeadlineAlert()">🔔 Remind</button>
+        </div>
+        <div class="urgency-bar" style="width:65%"></div>
+      </div>
+      <div class="deadline-card safe">
+        <div class="dl-left">
+          <div class="dl-name">Rhodes Scholarship</div>
+          <div class="dl-org">Rhodes Trust, Oxford</div>
+        </div>
+        <div class="dl-right">
+          <div class="dl-days">21 Days Left</div>
+          <div class="dl-amount">Full Tuition</div>
+          <button class="btn-sm" onclick="triggerDeadlineAlert()">🔔 Remind</button>
+        </div>
+        <div class="urgency-bar" style="width:30%"></div>
+      </div>
+    </div>
+
+    <!-- AI MATCH WIDGET -->
+    <div class="ai-match-banner">
+      <div class="ai-banner-left">
+        <div class="ai-tag">🤖 AI Smart Match</div>
+        <h3>5 new scholarships perfectly match your profile!</h3>
+        <p>Based on your GPA (3.8), major (Computer Science), and demographics.</p>
+        <button class="btn-primary" onclick="showPage('eligibility', document.querySelector('.nav-item:nth-child(3)'))">View AI Matches</button>
+      </div>
+      <div class="ai-banner-right">
+        <div class="match-ring">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#ffffff22" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#feca57" stroke-width="10"
+              stroke-dasharray="314" stroke-dashoffset="47" stroke-linecap="round"
+              transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="match-pct">85%</div>
+          <div class="match-label">Match Score</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="section-title">📊 Recent Activity</div>
+    <div class="activity-list">
+      <div class="activity-item">
+        <div class="act-dot" style="background:#48dbfb"></div>
+        <div class="act-content">
+          <strong>Application Submitted</strong> – Rhodes Scholarship
+          <div class="act-time">2 hours ago</div>
+        </div>
+        <span class="act-badge pending">Pending</span>
+      </div>
+      <div class="activity-item">
+        <div class="act-dot" style="background:#26de81"></div>
+        <div class="act-content">
+          <strong>Award Received</strong> – NSF Grant $5,000
+          <div class="act-time">3 days ago</div>
+        </div>
+        <span class="act-badge success">Awarded</span>
+      </div>
+      <div class="activity-item">
+        <div class="act-dot" style="background:#ff6b6b"></div>
+        <div class="act-content">
+          <strong>Blockchain Verified</strong> – Academic Certificate
+          <div class="act-time">5 days ago</div>
+        </div>
+        <span class="act-badge verified">Verified</span>
+      </div>
+      <div class="activity-item">
+        <div class="act-dot" style="background:#feca57"></div>
+        <div class="act-content">
+          <strong>Deadline Alert Sent</strong> – Gates Scholarship (2 days)
+          <div class="act-time">Today</div>
+        </div>
+        <span class="act-badge alert">Alert</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── PAGE: APPLY ─────────── -->
+  <section class="page" id="page-apply">
+    <div class="page-header">
+      <h1>📋 Apply for Scholarship</h1>
+      <p>Fill in your details and submit your application.</p>
+    </div>
+    <div class="form-grid">
+      <div class="form-card">
+        <div class="form-step active" id="step1">
+          <div class="step-header">
+            <div class="step-num">1</div>
+            <div>Personal Information</div>
+          </div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" class="form-input" placeholder="Atchaya" value="Atchaya">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" class="form-input" value="2007-05-07">
+            </div>
+            <div class="form-group">
+              <label>Gender</label>
+              <select class="form-input">
+                <option>Female</option><option>Male</option><option>Non-Binary</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="form-input" placeholder="atchayaa941@gmail.com" value="atchayaa941@gmail.com">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" class="form-input" placeholder="+91 877852212">
+          </div>
+          <button class="btn-primary" onclick="nextStep()">Next Step →</button>
+        </div>
+
+        <div class="form-step" id="step2" style="display:none">
+          <div class="step-header">
+            <div class="step-num">2</div>
+            <div>Academic Details</div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>University / College</label>
+              <input type="text" class="form-input" placeholder="krce" value="krce">
+            </div>
+            <div class="form-group">
+              <label>Major / Field of Study</label>
+              <input type="text" class="form-input" placeholder="Computer Science" value="Computer Science">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current GPA</label>
+              <input type="number" class="form-input" min="0" max="4" step="0.1" value="3.8">
+            </div>
+            <div class="form-group">
+              <label>Year of Study</label>
+              <select class="form-input">
+                <option>Freshman</option><option>Sophomore</option>
+                <option selected>Junior</option><option>Senior</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Scholarship Applying For</label>
+            <select class="form-input">
+              <option>Gates Millennium Scholarship</option>
+              <option>Rhodes Scholarship</option>
+              <option>STEM Excellence Award</option>
+              <option>Fulbright Program</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Personal Statement</label>
+            <textarea class="form-input" rows="4" placeholder="Tell us about yourself and your goals…">I am a passionate Computer Science student dedicated to using technology to solve real-world problems…</textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="prevStep()">← Back</button>
+            <button class="btn-primary" onclick="nextStep()">Next Step →</button>
+          </div>
+        </div>
+
+        <div class="form-step" id="step3" style="display:none">
+          <div class="step-header">
+            <div class="step-num">3</div>
+            <div>Documents & Submit</div>
+          </div>
+          <div class="upload-zone" onclick="simulateUpload(this)">
+            <div class="upload-icon">📄</div>
+            <div>Drag & drop or click to upload documents</div>
+            <div class="upload-sub">PDF, JPG, PNG – Max 10MB</div>
+          </div>
+          <div class="upload-list" id="uploadList"></div>
+          <div class="form-group" style="margin-top:1rem">
+            <label>Choose Alerts</label>
+            <div class="checkbox-group">
+              <label class="check-item"><input type="checkbox" checked> Email Notification</label>
+              <label class="check-item"><input type="checkbox" checked> SMS Alert</label>
+              <label class="check-item"><input type="checkbox"> WhatsApp Message</label>
+              <label class="check-item"><input type="checkbox" checked> Browser Push</label>
+            </div>
+          </div>
+          <div class="blockchain-note">
+            🔗 Your documents will be encrypted and stored on blockchain for tamper-proof verification.
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="prevStep()">← Back</button>
+            <button class="btn-primary" onclick="submitApplication()">🚀 Submit Application</button>
+          </div>
+        </div>
+
+        <!-- STEP PROGRESS -->
+        <div class="step-progress">
+          <div class="sp-item active" id="sp1">1</div>
+          <div class="sp-line" id="sl1"></div>
+          <div class="sp-item" id="sp2">2</div>
+          <div class="sp-line" id="sl2"></div>
+          <div class="sp-item" id="sp3">3</div>
+        </div>
+      </div>
+
+      <div class="form-sidebar">
+        <div class="fs-card">
+          <div class="fs-title">🎯 Eligibility Preview</div>
+          <div class="fs-score">
+            <div class="mini-ring">
+              <svg viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="34" fill="none" stroke="#ffffff22" stroke-width="8"/>
+                <circle cx="40" cy="40" r="34" fill="none" stroke="#26de81" stroke-width="8"
+                  stroke-dasharray="213" stroke-dashoffset="32"
+                  stroke-linecap="round" transform="rotate(-90 40 40)"/>
+              </svg>
+              <div class="mini-score">85%</div>
+            </div>
+            <div class="fs-text">Eligible for <strong>5 scholarships</strong> based on your current profile</div>
+          </div>
+        </div>
+        <div class="fs-card">
+          <div class="fs-title">📅 Key Deadlines</div>
+          <div class="mini-deadline"><span>Gates</span><span class="urgent-tag">2 days</span></div>
+          <div class="mini-deadline"><span>NSF STEM</span><span class="warn-tag">7 days</span></div>
+          <div class="mini-deadline"><span>Rhodes</span><span class="safe-tag">21 days</span></div>
+        </div>
+        <div class="fs-card">
+          <div class="fs-title">🔒 Blockchain Status</div>
+          <div class="blockchain-status">
+            <div class="bs-item"><span class="bs-dot green"></span>Transcript – Verified</div>
+            <div class="bs-item"><span class="bs-dot green"></span>ID Document – Verified</div>
+            <div class="bs-item"><span class="bs-dot yellow"></span>Recommendation – Pending</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── PAGE: AI ELIGIBILITY ─────────── -->
+  <section class="page" id="page-eligibility">
+    <div class="page-header">
+      <h1>🤖 AI Smart Match & Eligibility</h1>
+      <p>Our AI engine analyzes your profile to find the best scholarship matches.</p>
+    </div>
+
+    <div class="ai-scan-card">
+      <div class="ai-scan-header">
+        <div class="ai-icon-big">🧠</div>
+        <div>
+          <h3>AI Profile Analyzer</h3>
+          <p>Enter your details and let AI find your best matches instantly.</p>
+        </div>
+        <button class="btn-primary" onclick="runAIScan()">Run AI Scan ▶</button>
+      </div>
+      <div class="ai-inputs">
+        <div class="ai-input-group">
+          <label>GPA Score</label>
+          <input type="range" min="0" max="4" step="0.1" value="3.8" oninput="updateGPA(this.value)" id="gpaSlider">
+          <span class="range-val" id="gpaVal">3.8</span>
+        </div>
+        <div class="ai-input-group">
+          <label>Annual Income ($)</label>
+          <input type="range" min="0" max="200000" step="1000" value="45000" oninput="updateIncome(this.value)" id="incomeSlider">
+          <span class="range-val" id="incomeVal">$45,000</span>
+        </div>
+        <div class="ai-chip-group">
+          <label>Field of Study</label>
+          <div class="chips">
+            <span class="chip active" onclick="toggleChip(this)">Computer Science</span>
+            <span class="chip" onclick="toggleChip(this)">Engineering</span>
+            <span class="chip" onclick="toggleChip(this)">Medicine</span>
+            <span class="chip" onclick="toggleChip(this)">Arts</span>
+            <span class="chip" onclick="toggleChip(this)">Business</span>
+          </div>
+        </div>
+        <div class="ai-chip-group">
+          <label>Ethnicity / Background</label>
+          <div class="chips">
+            <span class="chip active" onclick="toggleChip(this)">Asian</span>
+            <span class="chip" onclick="toggleChip(this)">Hispanic</span>
+            <span class="chip" onclick="toggleChip(this)">African American</span>
+            <span class="chip" onclick="toggleChip(this)">Native American</span>
+            <span class="chip" onclick="toggleChip(this)">First-Gen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI RESULTS -->
+    <div id="aiResults" class="ai-results hidden">
+      <div class="section-title">✨ Top Matches for You</div>
+      <div class="match-grid" id="matchGrid"></div>
+    </div>
+  </section>
+
+  <!-- ─────────── PAGE: SCHOLARSHIPS ─────────── -->
+  <section class="page" id="page-scholarships">
+    <div class="page-header">
+      <h1>💎 All Scholarships</h1>
+      <p>Browse, filter, and apply to hundreds of scholarships.</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterScholarships('all',this)">All</button>
+      <button class="filter-btn" onclick="filterScholarships('stem',this)">STEM</button>
+      <button class="filter-btn" onclick="filterScholarships('arts',this)">Arts</button>
+      <button class="filter-btn" onclick="filterScholarships('merit',this)">Merit</button>
+      <button class="filter-btn" onclick="filterScholarships('need',this)">Need-Based</button>
+      <button class="filter-btn" onclick="filterScholarships('international',this)">International</button>
+    </div>
+    <div class="scholarship-grid" id="scholarshipGrid"></div>
+  </section>
+
+  <!-- ─────────── PAGE: TRACKING ─────────── -->
+  <section class="page" id="page-tracking">
+    <div class="page-header">
+      <h1>📡 Real-Time Application Tracking</h1>
+      <p>Live status updates on all your scholarship applications.</p>
+    </div>
+    <div class="tracking-list" id="trackingList"></div>
+  </section>
+
+  <!-- ─────────── PAGE: BLOCKCHAIN ─────────── -->
+  <section class="page" id="page-blockchain">
+    <div class="page-header">
+      <h1>🔗 Blockchain Security & Verification</h1>
+      <p>Every document is cryptographically secured and tamper-proof.</p>
+    </div>
+    <div class="blockchain-grid">
+      <div class="bc-card">
+        <div class="bc-icon">🏦</div>
+        <div class="bc-title">Distributed Ledger</div>
+        <div class="bc-desc">All records stored across 1,024 nodes worldwide — no single point of failure.</div>
+        <div class="bc-hash">0x7f4a...c3b2</div>
+      </div>
+      <div class="bc-card">
+        <div class="bc-icon">🔐</div>
+        <div class="bc-title">AES-256 Encryption</div>
+        <div class="bc-desc">Military-grade encryption on every file before it touches the blockchain.</div>
+        <div class="bc-hash">SHA3-512</div>
+      </div>
+      <div class="bc-card">
+        <div class="bc-icon">✅</div>
+        <div class="bc-title">Smart Contracts</div>
+        <div class="bc-desc">Scholarship disbursements are automated and irreversible via smart contracts.</div>
+        <div class="bc-hash">ETH #0x9c1d…</div>
+      </div>
+      <div class="bc-card">
+        <div class="bc-icon">👁️</div>
+        <div class="bc-title">Full Audit Trail</div>
+        <div class="bc-desc">Every access, modification, and submission is permanently logged.</div>
+        <div class="bc-hash">Block #1,847,203</div>
+      </div>
+    </div>
+    <div class="section-title">🔍 Verify a Document</div>
+    <div class="verify-box">
+      <input type="text" class="form-input" placeholder="Enter document hash or ID…" id="hashInput">
+      <button class="btn-primary" onclick="verifyDoc()">Verify Now 🔍</button>
+    </div>
+    <div id="verifyResult" class="verify-result hidden"></div>
+    <div class="section-title" style="margin-top:2rem">📦 Your Blockchain Records</div>
+    <div class="bc-records" id="bcRecords"></div>
+  </section>
+
+  <!-- ─────────── PAGE: ALERTS ─────────── -->
+  <section class="page" id="page-alerts">
+    <div class="page-header">
+      <h1>📣 Multi-Channel Alerts</h1>
+      <p>Configure how and when you receive scholarship notifications.</p>
+    </div>
+    <div class="alerts-grid">
+      <div class="alert-channel-card active-channel" id="ch-email">
+        <div class="ch-icon">📧</div>
+        <div class="ch-name">Email</div>
+        <div class="ch-desc">Instant emails for deadlines, status updates, awards</div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="toggleChannel('email',this)">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="ch-status" id="st-email">Active</div>
+      </div>
+      <div class="alert-channel-card active-channel" id="ch-sms">
+        <div class="ch-icon">💬</div>
+        <div class="ch-name">SMS / Text</div>
+        <div class="ch-desc">Quick text alerts 48h and 24h before deadlines</div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="toggleChannel('sms',this)">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="ch-status" id="st-sms">Active</div>
+      </div>
+      <div class="alert-channel-card" id="ch-whatsapp">
+        <div class="ch-icon">🟢</div>
+        <div class="ch-name">WhatsApp</div>
+        <div class="ch-desc">Rich media alerts with scholarship details & links</div>
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="toggleChannel('whatsapp',this)">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="ch-status" id="st-whatsapp">Inactive</div>
+      </div>
+      <div class="alert-channel-card active-channel" id="ch-push">
+        <div class="ch-icon">🔔</div>
+        <div class="ch-name">Browser Push</div>
+        <div class="ch-desc">Real-time push notifications in your browser</div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked onchange="toggleChannel('push',this)">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="ch-status" id="st-push">Active</div>
+      </div>
+      <div class="alert-channel-card" id="ch-slack">
+        <div class="ch-icon">💼</div>
+        <div class="ch-name">Slack</div>
+        <div class="ch-desc">Scholarship updates delivered to your Slack workspace</div>
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="toggleChannel('slack',this)">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="ch-status" id="st-slack">Inactive</div>
+      </div>
+      <div class="alert-channel-card" id="ch-sound">
+        <div class="ch-icon">🔊</div>
+        <div class="ch-name">Sound Alert</div>
+        <div class="ch-desc">Plays a sound alarm for urgent deadlines</div>
+        <label class="toggle-switch">
+          <input type="checkbox" onchange="toggleChannel('sound',this)">
+          <span class="toggle-slider"></span>
+        </label>
+        <div class="ch-status" id="st-sound">Inactive</div>
+      </div>
+    </div>
+    <div class="section-title" style="margin-top:2rem">🧪 Test Your Alerts</div>
+    <div class="test-alerts">
+      <button class="btn-test" onclick="testAlert('email')">📧 Test Email</button>
+      <button class="btn-test" onclick="testAlert('sms')">💬 Test SMS</button>
+      <button class="btn-test" onclick="testAlert('sound')">🔊 Test Sound</button>
+      <button class="btn-test" onclick="testAlert('push')">🔔 Test Push</button>
+    </div>
+    <div id="alertLog" class="alert-log"></div>
+  </section>
+
+  <!-- ─────────── PAGE: ADMIN ─────────── -->
+  <section class="page" id="page-admin">
+    <div class="page-header">
+      <h1>🛡️ Admin Panel</h1>
+      <p>Manage scholarships, applicants, and system settings.</p>
+    </div>
+    <div class="admin-stats">
+      <div class="adm-stat"><div class="adm-val">1,482</div><div class="adm-lbl">Total Applicants</div></div>
+      <div class="adm-stat"><div class="adm-val">248</div><div class="adm-lbl">Active Scholarships</div></div>
+      <div class="adm-stat"><div class="adm-val">$2.4M</div><div class="adm-lbl">Total Disbursed</div></div>
+      <div class="adm-stat"><div class="adm-val">97.2%</div><div class="adm-lbl">Verification Rate</div></div>
+    </div>
+    <div class="admin-panels">
+      <!-- Manage Scholarships -->
+      <div class="admin-panel">
+        <div class="ap-header">
+          <div class="ap-title">📚 Manage Scholarships</div>
+          <button class="btn-primary btn-sm2" onclick="addScholarship()">+ Add New</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Amount</th><th>Deadline</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="adminSchTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Applicant Review -->
+      <div class="admin-panel">
+        <div class="ap-header">
+          <div class="ap-title">👥 Applicant Review</div>
+          <select class="form-input" style="width:auto;padding:0.4rem 0.8rem">
+            <option>All Applications</option>
+            <option>Pending</option>
+            <option>Approved</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Applicant</th><th>Scholarship</th><th>GPA</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="adminAppTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL: SUCCESS -->
+<div class="modal-overlay" id="successModal" style="display:none">
+  <div class="modal">
+    <div class="modal-icon">🎉</div>
+    <h2>Application Submitted!</h2>
+    <p>Your application has been securely submitted and recorded on the blockchain.</p>
+    <div class="modal-hash">Blockchain TX: 0x4fa2…b39c</div>
+    <button class="btn-primary" onclick="closeModal()">Done ✓</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
